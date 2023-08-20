@@ -7,6 +7,17 @@ function(spore_semver SPORE_VERSION_OUT)
 
   if (GIT_FOUND)
     execute_process(
+      COMMAND ${GIT_EXECUTABLE} git rev-parse --is-inside-work-tree
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+      OUTPUT_VARIABLE SPORE_GIT_REPOSITORY
+    )
+
+    if (NOT ${SPORE_GIT_REPOSITORY})
+      message(STATUS "Skipping semantic versioning, not in a git repository")
+      return()
+    endif ()
+
+    execute_process(
       COMMAND ${GIT_EXECUTABLE} --no-pager log --format=%H --reverse
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
       OUTPUT_VARIABLE SPORE_GIT_COMMITS
