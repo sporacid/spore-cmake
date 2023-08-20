@@ -7,7 +7,7 @@ function(spore_semver SPORE_VERSION_OUT)
 
   if (GIT_FOUND)
     execute_process(
-      COMMAND ${GIT_EXECUTABLE} git rev-parse --is-inside-work-tree
+      COMMAND ${GIT_EXECUTABLE} rev-parse --is-inside-work-tree
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
       OUTPUT_VARIABLE SPORE_GIT_REPOSITORY
     )
